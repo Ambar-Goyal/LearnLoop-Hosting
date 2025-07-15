@@ -32,16 +32,17 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+        return callback(null, true);
       }
+      return callback(new Error("CORS policy does not allow this origin"), false);
     },
     credentials: true,
   })
 );
+
 app.use(
 	fileUpload({
 		useTempFiles: true,
