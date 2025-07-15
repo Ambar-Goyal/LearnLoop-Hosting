@@ -1,16 +1,16 @@
 {
-	"name": "studynotion-backend",
+	"name": "learnloop-backend",
 	"version": "1.0.0",
-	"description": "studynotion-backend",
+	"description": "learnloop-backend",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
 		"dev": "nodemon index.js"
 	},
 	"keywords": [
-		"studynotion-backend"
+		"learnloop-backend"
 	],
-	"author": "Saikat Mukherjee",
+	"author": "Ambar",
 	"license": "ISC",
 	"dependencies": {
 		"bcrypt": "^5.1.0",
