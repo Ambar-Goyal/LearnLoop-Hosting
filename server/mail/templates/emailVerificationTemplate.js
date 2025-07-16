@@ -70,7 +70,7 @@ const otpTemplate = (otp) => {
 	
 	<body>
 		<div class="container">
-			<a href="https://learnloop.vercel.app">
+			<a href="https://learn-loop-frontend.vercel.app">
 				<div class="logo-text">LearnLoop</div>
 			</a>
 			<div class="message">OTP Verification Email</div>
