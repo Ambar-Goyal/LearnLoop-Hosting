@@ -6,7 +6,7 @@ import { resetCourseState } from "../../../slices/courseSlice"
 
 export default function SidebarLink({ link, iconName }) {
   const Icon = Icons[iconName]
-  const location = useLocation()
+  const location = useLocation()//for changing the background colot of tag jis bhi path pe ho 
   const dispatch = useDispatch()
 
   const matchRoute = (route) => {

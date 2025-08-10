@@ -63,14 +63,14 @@ const CodeBlocks = ({
           className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-1`}
         >
           <TypeAnimation
-            sequence={[codeblock, 1000, ""]}
+            sequence={[codeblock, 1000, ""]}//10 second pause -->1000
             cursor={true}
             repeat={Infinity}
             style={{
               whiteSpace: "pre-line",
               display: "block",
             }}
-            omitDeletionAnimation={true}
+            omitDeletionAnimation={true}// avoid deletion automatically of the text inside zero se start hojaye likhna 
           />
         </div>
       </div>

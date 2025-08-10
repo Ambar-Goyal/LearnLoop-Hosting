@@ -42,6 +42,7 @@ const ContactUsForm = () => {
       })
     }
   }, [reset, isSubmitSuccessful])
+  // reset --> because it means form structure changed hence yeh dubara chle
 
   return (
     <form
@@ -77,7 +78,7 @@ const ContactUsForm = () => {
             id="lastname"
             placeholder="Enter last name"
             className="form-style"
-            {...register("lastname")}
+            {...register("lastname")}// optional hai hence do not use required true
           />
         </div>
       </div>

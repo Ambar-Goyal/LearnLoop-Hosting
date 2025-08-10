@@ -99,6 +99,7 @@ function App() {
           }
         />
         {/* Private Route - for Only Logged in User */}
+        {/* iske andar hi diye routes sbhi humne  */}
         <Route
           element={
             <PrivateRoute>

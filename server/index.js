@@ -30,7 +30,7 @@ const allowedOrigins = [
   "https://learn-loop-frontend.vercel.app",
 ];
 
-app.use(
+app.use(// allowing backend to entertain the request from fronetnf operating at diffetnt ports (Origin)
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)

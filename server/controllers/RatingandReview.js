@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 // Create a new rating and review
 exports.createRating = async (req, res) => {
   try {
-    const userId = req.user.id
+    const userId = req.user.id // yeh to auth middleware ne hi daala tha na brroo
     const { rating, review, courseId } = req.body
 
     // Check if the user is enrolled in the course
@@ -71,22 +71,22 @@ exports.getAverageRating = async (req, res) => {
   try {
     const courseId = req.body.courseId
 
-    // Calculate the average rating using the MongoDB aggregation pipeline
+    // Calculate the average rating using the MongoDB aggregation pipeline returns array 
     const result = await RatingAndReview.aggregate([
       {
         $match: {
-          course: new mongoose.Types.ObjectId(courseId), // Convert courseId to ObjectId
+          course: new mongoose.Types.ObjectId(courseId), // Convert courseId to ObjectId string thi phle
         },
       },
       {
         $group: {
-          _id: null,
+          _id: null,// koi basis nhi jitni aye sbko group krdo upar
           averageRating: { $avg: "$rating" },
         },
       },
     ])
 
-    if (result.length > 0) {
+    if (result.length > 0) {// rating milgyi h array milega result
       return res.status(200).json({
         success: true,
         averageRating: result[0].averageRating,
@@ -105,14 +105,14 @@ exports.getAverageRating = async (req, res) => {
   }
 }
 
-// Get all rating and reviews
+// Get all rating and reviews of platform not course
 exports.getAllRatingReview = async (req, res) => {
   try {
     const allReviews = await RatingAndReview.find({})
       .sort({ rating: "desc" })
       .populate({
         path: "user",
-        select: "firstName lastName email image", // Specify the fields you want to populate from the "Profile" model
+        select: "firstName lastName email image", // Specify the fields you want to populate from the "user" model
       })
       .populate({
         path: "course",

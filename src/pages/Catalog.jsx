@@ -9,11 +9,11 @@ import { apiConnector } from "../services/apiConnector"
 import { categories } from "../services/apis"
 import { getCatalogPageData } from "../services/operations/pageAndComponntDatas"
 import Error from "./Error"
-
+// when catlalog's category we selected here 
 const Catalog = () => {
   const { loading } = useSelector((state) => state.profile)
-  const { catalogName } = useParams()
-  const [active, setActive] = useState(1)
+  const { catalogName } = useParams()  // obviously 
+  const [active, setActive] = useState(1) // isse new mostpopular wali yellow line handle krre active ke hisab se as usi hisab se courses render krne hain na
   const [catalogPageData, setCatalogPageData] = useState(null)
   const [categoryId, setCategoryId] = useState("")
 
@@ -27,7 +27,7 @@ const Catalog = () => {
       setCategoryId(category_id)
     }
     getCategories()
-  }, [catalogName])
+  }, [catalogName])// jab bhi catalog name chaneg hoga yeh render hoga then
 
   useEffect(() => {
     const getCategoryDetails = async () => {
@@ -39,7 +39,7 @@ const Catalog = () => {
         console.log(error)
       }
     }
-    if (categoryId) {
+    if (categoryId) { // as if null hoti tb dikkat arri thi console mei print hori thi 
       getCategoryDetails()
     }
   }, [categoryId])
@@ -138,3 +138,4 @@ const Catalog = () => {
 }
 
 export default Catalog
+//3 things diffent selected and mostselling courses dikhare hain ek course page mei vhi milti hai backend se bhi

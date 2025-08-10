@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
   token: localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null,
 };
-
+// we need to store token in localStorage as other wie after a refresh token sets to null 
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,

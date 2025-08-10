@@ -42,6 +42,7 @@ export default function CourseInformationForm() {
       }
       setLoading(false)
     }
+    // we got each category in our database now 
     // if form is in edit mode
     if (editCourse) {
       // console.log("data populated", editCourse)

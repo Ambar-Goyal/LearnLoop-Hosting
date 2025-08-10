@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
-  const { signupData, loading } = useSelector((state) => state.auth);
+  const { signupData, loading } = useSelector((state) => state.auth);//signup form ka data hai signup data 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -65,7 +65,7 @@ function VerifyEmail() {
               value={otp}
               onChange={setOtp}
               numInputs={6}
-              renderInput={(props) => (
+              renderInput={(props) => (//syntax hi tha simply yeh to bhai ji 
                 <input
                   {...props}
                   placeholder="-"
@@ -95,7 +95,7 @@ function VerifyEmail() {
             </Link>
             <button
               className="flex items-center text-blue-100 gap-x-2"
-              onClick={() => dispatch(sendOtp(signupData.email))}
+              onClick={() => dispatch(sendOtp(signupData.email ))}
             >
               <RxCountdownTimer />
               Resend it

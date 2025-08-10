@@ -1,5 +1,5 @@
 const Category = require("../models/Category")
-
+// tagas are cretad by admin only not anybody they are available during the creation of the course hence humne phle hi database mei daalrkhe hain yeh 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max)
 }
@@ -18,7 +18,7 @@ exports.createCategory = async (req, res) => {
     console.log(CategorysDetails)
     return res.status(200).json({
       success: true,
-      message: "Categorys Created Successfully",
+      message: "Categoriess Created Successfully",
     })
   } catch (error) {
     return res.status(500).json({
@@ -92,9 +92,20 @@ exports.categoryPageDetails = async (req, res) => {
       .populate({
         path: "courses",
         match: { status: "Published" },
+        populate:{
+          path:"instructor",
+        }
       })
       .exec()
-    const allCourses = allCategories.flatMap((category) => category.courses)
+    const allCourses = allCategories.flatMap((category) => category.courses)//sbhi courses ko ek array mei lekar aagye hum 
+
+
+    /*It sorts all the courses by their sold property in descending order.
+
+    b.sold - a.sold means courses with higher sales come first.
+
+🔹 Step 3: Slice
+Then, it picks the top 10 courses after sorting — i.e., the 10 most sold courses. */
     const mostSellingCourses = allCourses
       .sort((a, b) => b.sold - a.sold)
       .slice(0, 10)

@@ -14,5 +14,5 @@ const Button = ({ children, active, linkto }) => {
     </Link>
   );
 };
-
+// children tell the text used here 
 export default Button;

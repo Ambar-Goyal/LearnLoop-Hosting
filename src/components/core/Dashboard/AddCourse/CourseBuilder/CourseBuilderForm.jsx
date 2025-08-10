@@ -28,7 +28,7 @@ export default function CourseBuilderForm() {
   const { course } = useSelector((state) => state.course)
   const { token } = useSelector((state) => state.auth)
   const [loading, setLoading] = useState(false)
-  const [editSectionName, setEditSectionName] = useState(null)
+  const [editSectionName, setEditSectionName] = useState(null)// as we are having edit section button not create section if editing it hence we need to have a state variable
   const dispatch = useDispatch()
 
   // handle form submission
@@ -72,6 +72,7 @@ export default function CourseBuilderForm() {
   }
 
   const handleChangeEditSectionName = (sectionId, sectionName) => {
+    // if phle hi edit button clickd hai to ab toggle hoga means vo unedit hoga na
     if (editSectionName === sectionId) {
       cancelEdit()
       return
@@ -93,6 +94,8 @@ export default function CourseBuilderForm() {
     }
     dispatch(setStep(3))
   }
+
+            
 
   const goBack = () => {
     dispatch(setStep(1))
@@ -141,7 +144,7 @@ export default function CourseBuilderForm() {
         </div>
       </form>
       {course.courseContent.length > 0 && (
-        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
+        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />//as udhar click krne par edit pe yahan bhi effect dikhega form mei or buttin edit vala hoga or vhi section form mei bhara dikhega
       )}
       {/* Next Prev Button */}
       <div className="flex justify-end gap-x-3">

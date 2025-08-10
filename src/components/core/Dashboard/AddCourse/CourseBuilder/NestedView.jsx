@@ -1,4 +1,4 @@
-import { useState } from "react"
+ import { useState } from "react"
 import { AiFillCaretDown } from "react-icons/ai"
 import { FaPlus } from "react-icons/fa"
 import { MdEdit } from "react-icons/md"
@@ -18,7 +18,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
   const { course } = useSelector((state) => state.course)
   const { token } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
-  // States to keep track of mode of modal [add, view, edit]
+  // States to keep track of mode of modal [add, view, edit] these 3 are possible only
   const [addSubSection, setAddSubsection] = useState(null)
   const [viewSubSection, setViewSubSection] = useState(null)
   const [editSubSection, setEditSubSection] = useState(null)
@@ -57,9 +57,9 @@ export default function NestedView({ handleChangeEditSectionName }) {
         id="nestedViewContainer"
       >
         {course?.courseContent?.map((section) => (
-          // Section Dropdown
+          // Section Dropdown to hide or to unhide the  each section content 
           <details key={section._id} open>
-            {/* Section Dropdown Content */}
+            {/* Section Dropdown Content sumamry means dropdown unclicked pe jitna dikhaana hai */}
             <summary className="flex cursor-pointer items-center justify-between border-b-2 border-b-richblack-600 py-2">
               <div className="flex items-center gap-x-3">
                 <RxDropdownMenu className="text-2xl text-richblack-50" />
@@ -101,7 +101,8 @@ export default function NestedView({ handleChangeEditSectionName }) {
               {section.subSection.map((data) => (
                 <div
                   key={data?._id}
-                  onClick={() => setViewSubSection(data)}
+                  onClick={() => setViewSubSection(data)}//click pe view hona chahiye section 
+          
                   className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"
                 >
                   <div className="flex items-center gap-x-3 py-2 ">
@@ -151,7 +152,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
           </details>
         ))}
       </div>
-      {/* Modal Display */}
+      {/* Modal Display only we need to add now at this time */}
       {addSubSection ? (
         <SubSectionModal
           modalData={addSubSection}
@@ -182,3 +183,5 @@ export default function NestedView({ handleChangeEditSectionName }) {
     </>
   )
 }
+// view add and edit 3 views for a lecture there are 
+//stop propogaton means ki view mial na khule jab eedit anddlete oe click ho vrna humehsa propgate hora tha on click

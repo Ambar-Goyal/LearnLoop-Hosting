@@ -48,3 +48,8 @@ export default function ViewCourse() {
     </>
   )
 }
+
+// The <Outlet /> tag in React Router is basically a placeholder where the child route’s component will be rendered inside the parent route’s layout.
+
+// Think of it like saying:
+// "I’ll keep a space here in my page, and whatever nested route matches will appear in this space." here used for video details 

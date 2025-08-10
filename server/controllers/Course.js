@@ -10,7 +10,7 @@ const { convertSecondsToDuration } = require("../utils/secToDuration")
 exports.createCourse = async (req, res) => {
   try {
     // Get user ID from request object
-    const userId = req.user.id
+    const userId = req.user.id 
 
     // Get all required fields from request body
     let {
@@ -64,7 +64,7 @@ exports.createCourse = async (req, res) => {
       })
     }
 
-    // Check if the tag given is valid
+    // Check if the tag given is valid as if hua nhi vo tag / categiry available actual mei
     const categoryDetails = await Category.findById(category)
     if (!categoryDetails) {
       return res.status(404).json({
@@ -235,19 +235,19 @@ exports.getAllCourses = async (req, res) => {
 //     const { courseId } = req.body
 //     const courseDetails = await Course.findOne({
 //       _id: courseId,
-//     })
+//     })//jo jo refernece (id) store hain usse related poora data
 //       .populate({
 //         path: "instructor",
 //         populate: {
-//           path: "additionalDetails",
+//           path: "additionalDetails",//as insturctor ke andar ek reference additionaldetails wala bhi hai vo bhi krna
 //         },
 //       })
 //       .populate("category")
 //       .populate("ratingAndReviews")
 //       .populate({
-//         path: "courseContent",
+//         path: "courseContent",///main thing
 //         populate: {
-//           path: "subSection",
+//           path: "subSection",//andar ki thing jo hogi 
 //         },
 //       })
 //       .exec()

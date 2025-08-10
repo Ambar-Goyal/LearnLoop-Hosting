@@ -51,15 +51,15 @@ exports.signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User already exists. Please sign in to continue.",
+        message: "User already exists. Please sign in with different mail to continue.",
       })
     }
 
-    // Find the most recent OTP for the email
+    // Find the most recent OTP for the email as multiple otps can exist here 
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
     console.log(response)
     if (response.length === 0) {
-      // OTP not found for the email
+      //     OTP not found for the email
       return res.status(400).json({
         success: false,
         message: "The OTP is not valid",
@@ -128,7 +128,7 @@ exports.login = async (req, res) => {
     }
 
     // Find user with provided email
-    const user = await User.findOne({ email }).populate("additionalDetails")
+    const user = await User.findOne({ email }).populate("additionalDetails")//as password chahiy to compare with user entered password 
 
     // If user not found with provided email
     if (!user) {
@@ -228,10 +228,10 @@ exports.sendotp = async (req, res) => {
 
     console.log({isOTPUnique})
 
-    await OTP.create({ email, otp })
+    await OTP.create({ email, otp })//entry is created for that particular mail here 
 
     console.log("Sending Email")
-    await mailSender(email, "OTP for Notion Study", otp);
+    await mailSender(email, "OTP for LearnLoop", otp);
     res.status(200).json({
       success: true,
       message: `OTP Sent Successfully`,

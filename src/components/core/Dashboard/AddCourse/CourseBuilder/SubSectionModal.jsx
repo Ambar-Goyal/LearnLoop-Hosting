@@ -36,14 +36,16 @@ export default function SubSectionModal({
   const { token } = useSelector((state) => state.auth)
   const { course } = useSelector((state) => state.course)
 
-  useEffect(() => {
-    if (view || edit) {
-      // console.log("modalData", modalData)
-      setValue("lectureTitle", modalData.title)
-      setValue("lectureDesc", modalData.description)
-      setValue("lectureVideo", modalData.videoUrl)
-    }
-  }, [])
+useEffect(() => {
+  // subsection has been already made that time 
+  if (view || edit) {
+    // console.log("modalData", modalData)
+    setValue("lectureTitle", modalData.title)
+    setValue("lectureDesc", modalData.description)
+    setValue("lectureVideo", modalData.videoUrl)
+  }
+}, [edit, view, modalData.title, modalData.description, modalData.videoUrl, setValue])//yhan kiya hai change dependency array mei from warnings
+
 
   // detect whether form is updated or not
   const isFormUpdated = () => {
@@ -103,7 +105,8 @@ export default function SubSectionModal({
       }
       return
     }
-
+  // view edit add are the flags sent with modal
+// adding a subsrction not view or edit 
     const formData = new FormData()
     formData.append("sectionId", modalData)
     formData.append("title", data.lectureTitle)
@@ -131,6 +134,7 @@ export default function SubSectionModal({
           <p className="text-xl font-semibold text-richblack-5">
             {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
           </p>
+        {/* jb load nhi hora kuch tbhi kro close bich mei nhi loading ke */}
           <button onClick={() => (!loading ? setModalData(null) : {})}>
             <RxCross2 className="text-2xl text-richblack-5" />
           </button>
@@ -148,7 +152,7 @@ export default function SubSectionModal({
             setValue={setValue}
             errors={errors}
             video={true}
-            viewData={view ? modalData.videoUrl : null}
+            viewData={view ? modalData.videoUrl : null}// video ka thumbnail tyoe bhi to dikhe if view edit ho
             editData={edit ? modalData.videoUrl : null}
           />
           {/* Lecture Title */}
@@ -175,6 +179,7 @@ export default function SubSectionModal({
               Lecture Description{" "}
               {!view && <sup className="text-pink-200">*</sup>}
             </label>
+            {/* text area should be disbaled (uneditable) if view or loading gets true */}
             <textarea
               disabled={view || loading}
               id="lectureDesc"
@@ -188,6 +193,7 @@ export default function SubSectionModal({
               </span>
             )}
           </div>
+          {/* no button if view is there  */}
           {!view && (
             <div className="flex justify-end">
               <IconBtn

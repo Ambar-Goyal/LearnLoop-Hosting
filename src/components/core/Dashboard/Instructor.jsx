@@ -2,36 +2,51 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
+// API service functions
 import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI"
 import { getInstructorData } from "../../../services/operations/profileAPI"
+
+// Chart component to visualize income/students
 import InstructorChart from "./InstructorDashboard/InstructorChart"
 
 export default function Instructor() {
+  // Redux: token for API calls & user info for greeting
   const { token } = useSelector((state) => state.auth)
   const { user } = useSelector((state) => state.profile)
-  const [loading, setLoading] = useState(false)
-  const [instructorData, setInstructorData] = useState(null)
-  const [courses, setCourses] = useState([])
 
+  // Local state
+  const [loading, setLoading] = useState(false)             // Loading spinner
+  const [instructorData, setInstructorData] = useState(null) // Stats (students, income)
+  const [courses, setCourses] = useState([])                // All courses by instructor
+
+  // Fetch instructor's stats & courses on mount
   useEffect(() => {
     ;(async () => {
       setLoading(true)
-      const instructorApiData = await getInstructorData(token)
+
+      // 1️⃣ Get stats (total students, revenue) from backend
+      const instructorApiData = await getInstructorData(token) 
+
+      // 2️⃣ Get full course details
       const result = await fetchInstructorCourses(token)
+
       console.log(instructorApiData)
+
+      // Store data in state
       if (instructorApiData.length) setInstructorData(instructorApiData)
-      if (result) {
-        setCourses(result)
-      }
+      if (result) setCourses(result)
+
       setLoading(false)
     })()
   }, [])
 
+  // Compute total revenue across all courses
   const totalAmount = instructorData?.reduce(
     (acc, curr) => acc + curr.totalAmountGenerated,
     0
   )
 
+  // Compute total students across all courses
   const totalStudents = instructorData?.reduce(
     (acc, curr) => acc + curr.totalStudentsEnrolled,
     0
@@ -39,6 +54,7 @@ export default function Instructor() {
 
   return (
     <div>
+      {/* Greeting Section */}
       <div className="space-y-2">
         <h1 className="text-2xl font-bold text-richblack-5">
           Hi {user?.firstName} 👋
@@ -47,12 +63,16 @@ export default function Instructor() {
           Let's start something new
         </p>
       </div>
+
+      {/* Loading spinner */}
       {loading ? (
         <div className="spinner"></div>
       ) : courses.length > 0 ? (
         <div>
+          {/* Chart & Stats Section */}
           <div className="my-4 flex h-[450px] space-x-4">
-            {/* Render chart / graph */}
+            
+            {/* Left side: Chart if enough data */}
             {totalAmount > 0 || totalStudents > 0 ? (
               <InstructorChart courses={instructorData} />
             ) : (
@@ -63,7 +83,8 @@ export default function Instructor() {
                 </p>
               </div>
             )}
-            {/* Total Statistics */}
+
+            {/* Right side: Statistics summary */}
             <div className="flex min-w-[250px] flex-col rounded-md bg-richblack-800 p-6">
               <p className="text-lg font-bold text-richblack-5">Statistics</p>
               <div className="mt-4 space-y-4">
@@ -88,14 +109,18 @@ export default function Instructor() {
               </div>
             </div>
           </div>
+
+          {/* Your Courses Section */}
           <div className="rounded-md bg-richblack-800 p-6">
-            {/* Render 3 courses */}
+            {/* Header */}
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold text-richblack-5">Your Courses</p>
               <Link to="/dashboard/my-courses">
                 <p className="text-xs font-semibold text-yellow-50">View All</p>
               </Link>
             </div>
+
+            {/* Show up to 3 courses */}
             <div className="my-4 flex items-start space-x-6">
               {courses.slice(0, 3).map((course) => (
                 <div key={course._id} className="w-1/3">
@@ -126,6 +151,7 @@ export default function Instructor() {
           </div>
         </div>
       ) : (
+        /* Empty state: No courses created yet */
         <div className="mt-20 rounded-md bg-richblack-800 p-6 py-20">
           <p className="text-center text-2xl font-bold text-richblack-5">
             You have not created any courses yet

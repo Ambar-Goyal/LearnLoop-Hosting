@@ -1,12 +1,12 @@
 // Import necessary modules
-const Section = require("../models/Section")
+const Section = require("../models/Section")//as subsection is a part of one of the section in which uts id needs to be pushed  
 const SubSection = require("../models/Subsection")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 
 // Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
   try {
-    // Extract necessary information from the request body
+    // Extract necessary information from the request body section id to hogi hi tbhi to subsection bna payeinge uske corresponding 
     const { sectionId, title, description } = req.body
     const video = req.files.video
 
@@ -18,7 +18,7 @@ exports.createSubSection = async (req, res) => {
     }
     console.log(video)
 
-    // Upload the video file to Cloudinary
+    // Upload the video file to Cloudinary to get a secure url to be stored in db 
     const uploadDetails = await uploadImageToCloudinary(
       video,
       process.env.FOLDER_NAME

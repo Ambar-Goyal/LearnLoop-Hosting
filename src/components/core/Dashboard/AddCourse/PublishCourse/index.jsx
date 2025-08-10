@@ -28,12 +28,13 @@ export default function PublishCourse() {
   }
 
   const goToCourses = () => {
-    dispatch(resetCourseState())
+    dispatch(resetCourseState())//here step resets to 1 okkayyy
     navigate("/dashboard/my-courses")
   }
 
   const handleCoursePublish = async () => {
     // check if form has been updated or not
+    // if form update nhi hua no need to do anything
     if (
       (course?.status === COURSE_STATUS.PUBLISHED &&
         getValues("public") === true) ||
@@ -44,6 +45,7 @@ export default function PublishCourse() {
       goToCourses()
       return
     }
+    //if update hua make form data
     const formData = new FormData()
     formData.append("courseId", course._id)
     const courseStatus = getValues("public")

@@ -2,6 +2,7 @@ const User = require("../models/User")
 const mailSender = require("../utils/mailSender")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
+// two things to do for changing the password here send the token then change it 
 exports.resetPasswordToken = async (req, res) => {
   try {
     const email = req.body.email
@@ -12,10 +13,10 @@ exports.resetPasswordToken = async (req, res) => {
         message: `This Email: ${email} is not Registered With Us Enter a Valid Email `,
       })
     }
-    const token = crypto.randomBytes(20).toString("hex")
+    const token = crypto.randomBytes(20).toString("hex") // generating the link here bro using this token 
 
-    const updatedDetails = await User.findOneAndUpdate(
-      { email: email },
+    const updatedDetails = await User.findOneAndUpdate(  // each user have its own token and expire time in the mongodb document
+      { email: email }, // email ke addahr pe search kiya hai 
       {
         token: token,
         resetPasswordExpires: Date.now() + 3600000,
@@ -24,8 +25,8 @@ exports.resetPasswordToken = async (req, res) => {
     )
     console.log("DETAILS", updatedDetails)
 
-    const url = `http://localhost:3000/update-password/${token}`
-    // const url = `https://studynotion-edtech-project.vercel.app/update-password/${token}`
+    const url = `http://localhost:3000/update-password/${token}` // frontend 300 pe chalare the na 
+    // const url = `https://learnloop.vercel.app/update-password/${token}`
 
     await mailSender(
       email,
@@ -49,7 +50,7 @@ exports.resetPasswordToken = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-    const { password, confirmPassword, token } = req.body
+    const { password, confirmPassword, token } = req.body // dont confuse with token as its not in request body vo kaam frontned se krware hain isme we are not doing it 
 
     if (confirmPassword !== password) {
       return res.json({
@@ -57,7 +58,7 @@ exports.resetPassword = async (req, res) => {
         message: "Password and Confirm Password Does not Match",
       })
     }
-    const userDetails = await User.findOne({ token: token })
+    const userDetails = await User.findOne({ token: token })//token ka use krke user ki entry lao so that update password here  upar dala tha maine token user mei hi
     if (!userDetails) {
       return res.json({
         success: false,

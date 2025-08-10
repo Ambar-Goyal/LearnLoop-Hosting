@@ -12,7 +12,10 @@ const {
   SEND_PAYMENT_SUCCESS_EMAIL_API,
 } = studentEndpoints
 
-// Load the Razorpay SDK from the CDN
+// -------------------------
+//  Utility: Load Razorpay SDK dynamically at runtime
+//  Returns a Promise → resolves true if loaded successfully, false otherwise
+// -------------------------
 function loadScript(src) {
   return new Promise((resolve) => {
     const script = document.createElement("script")
@@ -27,36 +30,42 @@ function loadScript(src) {
   })
 }
 
-// Buy the Course
+// -------------------------
+//  BuyCourse function
+//  Steps:
+//   1. Load Razorpay SDK
+//   2. Call backend to create an Order (Razorpay Orders API)
+//   3. Open Razorpay checkout modal with order details
+//   4. On success → send payment success email + verify payment
+// -------------------------
 export async function BuyCourse(
   token,
-  courses,
-  user_details,
-  navigate,
-  dispatch
+  courses,         // array of course IDs to purchase
+  user_details,    // { firstName, lastName, email }
+  navigate,        // react-router navigation function
+  dispatch         // redux dispatch
 ) {
   const toastId = toast.loading("Loading...")
-  try {
-    // Loading the script of Razorpay SDK
-    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
 
+  try {
+    // 1️⃣ Load the Razorpay Checkout script
+    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
     if (!res) {
-      toast.error(
-        "Razorpay SDK failed to load. Check your Internet Connection."
-      )
+      toast.error("Razorpay SDK failed to load. Check your Internet Connection.")
       return
     }
 
-    // Initiating the Order in Backend
+    // 2️⃣ Initiate Order creation in backend (Capture Payment API call)
+    // Backend will call Razorpay Orders API → return order_id, amount, currency, etc.
+    // NOTES: In your backend when creating the order, you can send additional data
+    //   in Razorpay's "notes" field:
+    //   notes: { courseIds: courses, userId: <userId> }
+    // This is useful because Razorpay will send it back in webhooks/payment details.
     const orderResponse = await apiConnector(
       "POST",
       COURSE_PAYMENT_API,
-      {
-        courses,
-      },
-      {
-        Authorization: `Bearer ${token}`,
-      }
+      { courses },
+      { Authorization: `Bearer ${token}` }
     )
 
     if (!orderResponse.data.success) {
@@ -64,13 +73,13 @@ export async function BuyCourse(
     }
     console.log("PAYMENT RESPONSE FROM BACKEND............", orderResponse.data)
 
-    // Opening the Razorpay SDK
+    // 3️⃣ Configure Razorpay Checkout options
     const options = {
-      key: process.env.REACT_APP_KEY,
+      key: process.env.REACT_APP_KEY, // Razorpay Key ID from env
       currency: orderResponse.data.data.currency,
-      amount: `${orderResponse.data.data.amount}`,
-      order_id: orderResponse.data.data.id,
-      name: "LearnLoop",
+      amount: `${orderResponse.data.data.amount}`, // in paise (₹1 = 100 paise)(yeh sab order response dekhne se pata chlra hai hierchy console log se)
+      order_id: orderResponse.data.data.id, // orderId from backend
+      name: "LearnLoop", // Business Name
       description: "Thank you for Purchasing the Course.",
       image: rzpLogo,
       prefill: {
@@ -78,32 +87,49 @@ export async function BuyCourse(
         email: user_details.email,
       },
       handler: function (response) {
+        // This runs when payment is successful
         sendPaymentSuccessEmail(response, orderResponse.data.data.amount, token)
         verifyPayment({ ...response, courses }, token, navigate, dispatch)
       },
+      // You can also pass "notes" here in case you want Razorpay to return extra data after checkout
+      // notes: { courseIds: courses, userId: user_details.id }
     }
-    const paymentObject = new window.Razorpay(options)
 
+    // 4️⃣ Open the Razorpay Checkout modal
+    const paymentObject = new window.Razorpay(options)
     paymentObject.open()
+
+    // Handle payment failure
     paymentObject.on("payment.failed", function (response) {
       toast.error("Oops! Payment Failed.")
       console.log(response.error)
     })
+
   } catch (error) {
     console.log("PAYMENT API ERROR............", error)
     toast.error("Could Not make Payment.")
   }
+
   toast.dismiss(toastId)
 }
 
-// Verify the Payment
+// -------------------------
+//  Verify Payment with backend
+//  Backend will:
+//    - Verify Razorpay signature
+//    - Enroll user into course if valid
+// -------------------------
 async function verifyPayment(bodyData, token, navigate, dispatch) {
   const toastId = toast.loading("Verifying Payment...")
   dispatch(setPaymentLoading(true))
+
   try {
-    const response = await apiConnector("POST", COURSE_VERIFY_API, bodyData, {
-      Authorization: `Bearer ${token}`,
-    })
+    const response = await apiConnector(
+      "POST",
+      COURSE_VERIFY_API,
+      bodyData,
+      { Authorization: `Bearer ${token}` }
+    )
 
     console.log("VERIFY PAYMENT RESPONSE FROM BACKEND............", response)
 
@@ -118,11 +144,16 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
     console.log("PAYMENT VERIFY ERROR............", error)
     toast.error("Could Not Verify Payment.")
   }
+
   toast.dismiss(toastId)
   dispatch(setPaymentLoading(false))
 }
 
-// Send the Payment Success Email
+// -------------------------
+//  Send Payment Success Email
+//  Sends orderId, paymentId, and amount to backend
+//  Backend will send confirmation email to the user
+// -------------------------
 async function sendPaymentSuccessEmail(response, amount, token) {
   try {
     await apiConnector(
@@ -133,9 +164,7 @@ async function sendPaymentSuccessEmail(response, amount, token) {
         paymentId: response.razorpay_payment_id,
         amount,
       },
-      {
-        Authorization: `Bearer ${token}`,
-      }
+      { Authorization: `Bearer ${token}` }
     )
   } catch (error) {
     console.log("PAYMENT SUCCESS EMAIL ERROR............", error)

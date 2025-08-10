@@ -1,5 +1,5 @@
 import React from "react"
-import copy from "copy-to-clipboard"
+import copy from "copy-to-clipboard"// for sharing the course copy the current course url in clipboard
 import { toast } from "react-hot-toast"
 import { BsFillCaretRightFill } from "react-icons/bs"
 import { FaShareSquare } from "react-icons/fa"
@@ -17,7 +17,7 @@ import { ACCOUNT_TYPE } from "../../../utils/constants"
 // ]
 
 function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
-  const { user } = useSelector((state) => state.profile)
+  const { user } = useSelector((state) => state.profile)//to see whether usne phle se liya hua hai ya nhi vo course 
   const { token } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
     price: CurrentPrice,
     _id: courseId,
   } = course
-
+//course se poora data nikal liya hai brother
   const handleShare = () => {
     copy(window.location.href)
     toast.success("Link copied to clipboard")
@@ -79,6 +79,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
                   : handleBuyCourse
               }
             >
+            {/* if already bought dont show buy here say go to course in it */}
               {user && course?.studentsEnroled.includes(user?._id)
                 ? "Go To Course"
                 : "Buy Now"}

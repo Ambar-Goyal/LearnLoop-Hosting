@@ -39,6 +39,7 @@ export default function RenderSteps() {
                     : "border-richblack-700 bg-richblack-800 text-richblack-300"
                 } ${step > item.id && "bg-yellow-50 text-yellow-50"}} `}
               >
+              {/* aage phonche ot pichle mei tick dikhra hai numbern hi hence facheck else ni=umber hi dikhao thats is item id */}
                 {step > item.id ? (
                   <FaCheck className="font-bold text-richblack-900" />
                 ) : (

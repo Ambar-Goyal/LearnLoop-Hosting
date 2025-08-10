@@ -13,7 +13,7 @@ function ForgotPassword() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    dispatch(getPasswordResetToken(email, setEmailSent))
+    dispatch(getPasswordResetToken(email, setEmailSent))// when backedn has sent mail it will do it to true for sure 
   }
 
   return (

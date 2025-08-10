@@ -5,7 +5,8 @@ import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiConnector"
 import { endpoints } from "../apis"
-
+import { useNavigate } from "react-router-dom"
+//yhi se jaari hain backend pe  sabhi requests ab 
 const {
   SENDOTP_API,
   SIGNUP_API,
@@ -51,7 +52,10 @@ export function signUp(
   confirmPassword,
   otp,
   navigate
-) {
+  
+)
+ {
+  
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))

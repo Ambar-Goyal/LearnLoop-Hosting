@@ -26,7 +26,7 @@ function CourseDetails() {
 
   // Getting courseId from url parameter
   const { courseId } = useParams()
-  // console.log(`course id: ${courseId}`)
+  // console.log(`course id: ${courseId}`) //course id se poori info le aaye 
 
   // Declear a state to save the course details
   const [response, setResponse] = useState(null)
@@ -49,7 +49,7 @@ function CourseDetails() {
   // Calculating Avg Review count
   const [avgReviewCount, setAvgReviewCount] = useState(0)
   useEffect(() => {
-    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
+    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)//array dediya rating revies vala brooooo
     setAvgReviewCount(count)
   }, [response])
   // console.log("avgReviewCount: ", avgReviewCount)
@@ -59,6 +59,7 @@ function CourseDetails() {
   const [isActive, setIsActive] = useState(Array(0))
   const handleActive = (id) => {
     // console.log("called", id)
+    //active means kis section ko open dikhana hai kisi nhi (band hi) if phle se active hai to na krdo means toglling hi to hai basically
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
@@ -66,7 +67,7 @@ function CourseDetails() {
     )
   }
 
-  // Total number of lectures
+  // Total number of lectures sec--> has subsections which represents the data
   const [totalNoOfLectures, setTotalNoOfLectures] = useState(0)
   useEffect(() => {
     let lectures = 0
@@ -106,6 +107,7 @@ function CourseDetails() {
       BuyCourse(token, [courseId], user, navigate, dispatch)
       return
     }
+    // if trying to buy without getting logged in any course
     setConfirmationModal({
       text1: "You are not logged in!",
       text2: "Please login to Purchase Course.",
@@ -184,7 +186,7 @@ function CourseDetails() {
           <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">
             <CourseDetailsCard
               course={response?.data?.courseDetails}
-              setConfirmationModal={setConfirmationModal}
+              setConfirmationModal={setConfirmationModal}//as if user is buying without loggedin to yeh dikhana hi padega na hume to usme
               handleBuyCourse={handleBuyCourse}
             />
           </div>

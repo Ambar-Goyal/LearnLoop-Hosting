@@ -11,7 +11,7 @@ import RenderSteps from "../AddCourse/RenderSteps"
 
 export default function EditCourse() {
   const dispatch = useDispatch()
-  const { courseId } = useParams()
+  const { courseId } = useParams()// url mei hi dikhegi yeh id to 
   const { course } = useSelector((state) => state.course)
   const [loading, setLoading] = useState(false)
   const { token } = useSelector((state) => state.auth)
@@ -21,7 +21,7 @@ export default function EditCourse() {
       setLoading(true)
       const result = await getFullDetailsOfCourse(courseId, token)
       if (result?.courseDetails) {
-        dispatch(setEditCourse(true))
+        dispatch(setEditCourse(true))//to tell yes we are editing a course
         dispatch(setCourse(result?.courseDetails))
       }
       setLoading(false)

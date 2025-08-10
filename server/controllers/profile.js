@@ -6,7 +6,7 @@ const User = require("../models/User")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const mongoose = require("mongoose")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
-// Method for updating a profile
+// Method for updating a profile as initially during signup we made it to null for each key  tbhi its update no t create 
 exports.updateProfile = async (req, res) => {
   try {
     const {
@@ -16,8 +16,8 @@ exports.updateProfile = async (req, res) => {
       about = "",
       contactNumber = "",
       gender = "",
-    } = req.body
-    const id = req.user.id
+    } = req.body // "" used as aa rhi to lelo else null hi mano ise
+    const id = req.user.id //token se mili ji yeh to abhi 
 
     // Find the profile by id
     const userDetails = await User.findById(id)
@@ -35,7 +35,7 @@ exports.updateProfile = async (req, res) => {
     profile.contactNumber = contactNumber
     profile.gender = gender
 
-    // Save the updated profile
+    // Save the updated profile as create thodi hua ab to update kiya hai just
     await profile.save()
 
     // Find the updated user details
@@ -68,7 +68,7 @@ exports.deleteAccount = async (req, res) => {
         message: "User not found",
       })
     }
-    // Delete Assosiated Profile with the User
+    // Delete Assosiated Profile with the User first then actual user is deleted 
     await Profile.findByIdAndDelete({
       _id: new mongoose.Types.ObjectId(user.additionalDetails),
     })
@@ -209,29 +209,38 @@ exports.getEnrolledCourses = async (req, res) => {
   }
 }
 
+// Controller function to fetch instructor dashboard data
 exports.instructorDashboard = async (req, res) => {
   try {
+    // 1️⃣ Fetch all courses created by the currently logged-in instructor
+    // `req.user.id` is available because of authentication middleware
     const courseDetails = await Course.find({ instructor: req.user.id })
 
+    // 2️⃣ Transform course data to include additional statistics
     const courseData = courseDetails.map((course) => {
+      // Count total enrolled students for this course
       const totalStudentsEnrolled = course.studentsEnroled.length
+
+      // Calculate total revenue generated from this course
       const totalAmountGenerated = totalStudentsEnrolled * course.price
 
-      // Create a new object with the additional fields
+      // Return a simplified course object with the stats included
       const courseDataWithStats = {
-        _id: course._id,
-        courseName: course.courseName,
-        courseDescription: course.courseDescription,
-        // Include other course properties as needed
-        totalStudentsEnrolled,
-        totalAmountGenerated,
+        _id: course._id, // Unique course ID
+        courseName: course.courseName, // Name of the course
+        courseDescription: course.courseDescription, // Short course description
+        totalStudentsEnrolled, // Number of students enrolled
+        totalAmountGenerated,  // Revenue (students × price)
+        // 📝 Note: You can add more fields here if needed for the dashboard
       }
 
       return courseDataWithStats
     })
 
+    // 3️⃣ Send the processed data back to the frontend
     res.status(200).json({ courses: courseData })
   } catch (error) {
+    // 4️⃣ Log the error and send a 500 response
     console.error(error)
     res.status(500).json({ message: "Server Error" })
   }
