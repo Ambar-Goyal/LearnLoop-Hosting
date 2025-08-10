@@ -173,22 +173,23 @@ const VideoDetails = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5 text-white">
+    <div className="flex flex-col gap-4 sm:gap-6 text-white">
       {/* Show preview image if no video yet */}
       {!videoData ? (
         <img
           src={previewSource}
           alt="Preview"
-          className="h-full w-full rounded-md object-cover"
+          className="h-full w-full rounded-xl object-cover"
         />
       ) : (
-        // --------------------VIDEO PLAYER used from the react hereeee---------------------
+        // VIDEO PLAYER
         <Player
-          ref={playerRef} // This lets us control the player (rewatch, seek, etc.)
+          ref={playerRef}
           aspectRatio="16:9"
           playsInline
           onEnded={() => setVideoEnded(true)}
           src={videoData?.videoUrl}
+          className="rounded-xl overflow-hidden"
         >
           <BigPlayButton position="center" />
 
@@ -199,38 +200,38 @@ const VideoDetails = () => {
                 backgroundImage:
                   "linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
               }}
-              className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter"
+              className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter p-4 sm:p-6"
             >
-              {/* Mark As Completed button (only if not already done else nhi dikhana if already marked) */}
+              {/* Mark As Completed button */}
               {!completedLectures.includes(subSectionId) && (
                 <IconBtn
                   disabled={loading}
                   onclick={handleLectureCompletion}
                   text={!loading ? "Mark As Completed" : "Loading..."}
-                  customClasses="text-xl max-w-max px-4 mx-auto"
+                  customClasses="text-base sm:text-lg lg:text-xl max-w-max px-4 sm:px-6 mx-auto"
                 />
               )}
 
-              {/* Rewatch button → uses playerRef to restart video */}
+              {/* Rewatch button */}
               <IconBtn
                 disabled={loading}
                 onclick={() => {
                   if (playerRef?.current) {
-                    playerRef.current.seek(0) // Restart video from beginning
+                    playerRef.current.seek(0)
                     setVideoEnded(false)
                   }
                 }}
                 text="Rewatch"
-                customClasses="text-xl max-w-max px-4 mx-auto mt-2"
+                customClasses="text-base sm:text-lg lg:text-xl max-w-max px-4 sm:px-6 mx-auto mt-2 sm:mt-3"
               />
 
               {/* Navigation buttons */}
-              <div className="mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl">
+              <div className="mt-6 sm:mt-8 lg:mt-10 flex flex-col sm:flex-row min-w-[200px] sm:min-w-[250px] justify-center gap-3 sm:gap-x-4 text-base sm:text-lg lg:text-xl">
                 {!isFirstVideo() && (
                   <button
                     disabled={loading}
                     onClick={goToPrevVideo}
-                    className="blackButton"
+                    className="blackButton w-full sm:w-auto"
                   >
                     Prev
                   </button>
@@ -239,7 +240,7 @@ const VideoDetails = () => {
                   <button
                     disabled={loading}
                     onClick={goToNextVideo}
-                    className="blackButton"
+                    className="blackButton w-full sm:w-auto"
                   >
                     Next
                   </button>
@@ -250,9 +251,9 @@ const VideoDetails = () => {
         </Player>
       )}
 
-      {/* ------------------ VIDEO DETAILS ------------------ */}
-      <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>
-      <p className="pt-2 pb-6">{videoData?.description}</p>
+      {/* VIDEO DETAILS */}
+      <h1 className="mt-4 sm:mt-6 text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">{videoData?.title}</h1>
+      <p className="pt-2 sm:pt-3 pb-4 sm:pb-6 text-sm sm:text-base lg:text-lg text-richblack-200 leading-relaxed">{videoData?.description}</p>
     </div>
   )
 }

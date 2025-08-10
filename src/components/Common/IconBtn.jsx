@@ -17,13 +17,13 @@ export default function IconBtn({
       onClick={onclick}
 
       // Dynamically set CSS classes based on props
-      className={`flex items-center 
+      className={`flex items-center justify-center
         ${outline 
-          ? "border border-yellow-50 bg-transparent"  // Outline style
-          : "bg-yellow-50"                             // Filled style
+          ? "border border-yellow-50 bg-transparent hover:bg-yellow-50 hover:text-richblack-900"
+          : "bg-yellow-50 hover:bg-yellow-100"
         } 
-        cursor-pointer gap-x-2 rounded-md py-2 px-5 
-        font-semibold text-richblack-900 ${customClasses}`} // Common styles
+        cursor-pointer gap-x-2 rounded-lg py-2 sm:py-3 px-4 sm:px-6 
+        font-semibold text-richblack-900 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${customClasses}`}
 
       // Sets HTML button type ("submit", "button", "reset")
       type={type}
@@ -31,12 +31,12 @@ export default function IconBtn({
       {children ? (
         // If 'children' (like an icon) exists, render both text + icon
         <>
-          <span className={`${outline && "text-yellow-50"}`}>{text}</span>
+          <span className={`${outline && "text-yellow-50"} text-sm sm:text-base`}>{text}</span>
           {children}
         </>
       ) : (
         // If no 'children', just show text
-        text
+        <span className="text-sm sm:text-base">{text}</span>
       )}
     </button>
   )

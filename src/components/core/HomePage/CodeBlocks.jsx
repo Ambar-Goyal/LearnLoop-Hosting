@@ -14,20 +14,19 @@ const CodeBlocks = ({
   codeColor,
 }) => {
   return (
-    <div className={`flex ${position} my-20 justify-between flex-col lg:gap-10 gap-10`}>
-
+    <div className={`flex ${position} my-12 sm:my-16 lg:my-20 justify-between flex-col gap-8 sm:gap-10 lg:gap-12 xl:gap-16`}>
 
       {/* Section 1  */}
-      <div className="w-[100%] lg:w-[50%] flex flex-col gap-8">
+      <div className="w-full lg:w-[50%] flex flex-col gap-6 sm:gap-8">
         {heading}
 
         {/* Sub Heading */}
-        <div className="text-richblack-300 text-base font-bold w-[85%] -mt-3">
+        <div className="text-richblack-300 text-sm sm:text-base lg:text-lg font-medium w-[95%] sm:w-[90%] lg:w-[85%] leading-relaxed">
           {subheading}
         </div>
 
         {/* Button Group */}
-        <div className="flex gap-7 mt-7">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 mt-6 sm:mt-8">
           <CTAButton active={ctabtn1.active} linkto={ctabtn1.link}>
             <div className="flex items-center gap-2">
               {ctabtn1.btnText}
@@ -41,10 +40,10 @@ const CodeBlocks = ({
       </div>
 
       {/* Section 2 */}
-      <div className="h-fit code-border flex flex-row py-3 text-[10px] sm:text-sm leading-[18px] sm:leading-6 relative w-[100%] lg:w-[470px]">
+      <div className="h-fit code-border flex flex-row py-3 sm:py-4 text-xs sm:text-sm lg:text-base leading-5 sm:leading-6 relative w-full max-w-[400px] sm:max-w-[500px] lg:w-[470px] mx-auto lg:mx-0 rounded-xl overflow-hidden">
         {backgroundGradient}
         {/* Indexing */}
-        <div className="text-center flex flex-col   w-[10%] select-none text-richblack-400 font-inter font-bold ">
+        <div className="text-center flex flex-col w-[10%] select-none text-richblack-400 font-inter font-bold text-xs sm:text-sm">
           <p>1</p>
           <p>2</p>
           <p>3</p>
@@ -60,17 +59,17 @@ const CodeBlocks = ({
 
         {/* Codes */}
         <div
-          className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-1`}
+          className={`w-[90%] flex flex-col gap-1 sm:gap-2 font-bold font-mono ${codeColor} pr-2 sm:pr-4 text-xs sm:text-sm lg:text-base`}
         >
           <TypeAnimation
-            sequence={[codeblock, 1000, ""]}//10 second pause -->1000
+            sequence={[codeblock, 2000, ""]}
             cursor={true}
             repeat={Infinity}
             style={{
               whiteSpace: "pre-line",
               display: "block",
             }}
-            omitDeletionAnimation={true}// avoid deletion automatically of the text inside zero se start hojaye likhna 
+            omitDeletionAnimation={true}
           />
         </div>
       </div>

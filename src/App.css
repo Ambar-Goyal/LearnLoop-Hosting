@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base responsive typography */
+@layer base {
+  html {
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    html {
+      font-size: 14px;
+    }
+  }
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -16,7 +29,7 @@ body {
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 3px;
+  width: 4px;
 }
 
 *::-webkit-scrollbar-track {
@@ -53,6 +66,15 @@ details > summary::-webkit-details-marker {
     spinner-oaa3wk 1.6s infinite linear;
 }
 
+/* Responsive spinner */
+@media (max-width: 768px) {
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 6px solid #f1f2ff;
+  }
+}
+
 .codeblock1 {
   width: 372.95px;
   height: 257.05px;
@@ -69,6 +91,15 @@ details > summary::-webkit-details-marker {
   filter: blur(34px);
   transform: matrix(1, 0, -0.03, 1, 0, 0);
 }
+
+@media (max-width: 768px) {
+  .codeblock1 {
+    width: 280px;
+    height: 200px;
+    filter: blur(20px);
+  }
+}
+
 .codeblock2 {
   position: absolute;
   width: 372.95px;
@@ -86,6 +117,15 @@ details > summary::-webkit-details-marker {
   filter: blur(34px);
   transform: matrix(1, 0, -0.03, 1, 0, 0);
 }
+
+@media (max-width: 768px) {
+  .codeblock2 {
+    width: 280px;
+    height: 200px;
+    filter: blur(20px);
+  }
+}
+
 .code-border {
   border: 2px solid;
   border-image-slice: 1;
@@ -96,11 +136,26 @@ details > summary::-webkit-details-marker {
     rgba(14, 26, 45, 0.24) -1.4%,
     rgba(17, 30, 50, 0.38) 104.96%
   );
-  /* backdrop-filter: blur(26px); */
 }
+
+@media (max-width: 768px) {
+  .code-border {
+    border-width: 1px;
+  }
+}
+
 .homepage_bg {
   background: url("../src/assets/Images/bghome.svg");
-  /* background-size: contain; */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .homepage_bg {
+    background-size: cover;
+    min-height: 200px;
+  }
 }
 
 @keyframes spinner-bulqg1 {
@@ -212,35 +267,81 @@ details > summary::-webkit-details-marker {
 
 /* Buttons */
 .yellowButton {
-  @apply cursor-pointer rounded-md bg-yellow-50 px-[20px] py-[8px] font-semibold text-richblack-900;
+  @apply cursor-pointer rounded-lg bg-yellow-50 px-6 py-3 font-semibold text-richblack-900 transition-all duration-200 hover:bg-yellow-100 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+}
+
+@media (max-width: 768px) {
+  .yellowButton {
+    @apply px-4 py-2 text-sm;
+  }
 }
 
 /* Swiper CSS Starts */
-/* .swiper {
-  max-width: 1200px;
-  width: 91.66%;
-  height: 185px;
-  margin: 50px 0px;
-} */
-
 .swiper-slide {
   width: 100%;
   height: 100%;
 }
-/* .swiper-slide {
-  @apply bg-richblack-800 text-richblack-25 p-3 text-[14px];
-} */
 /* Swiper CSS Ends */
 
 .blackButton {
-  @apply cursor-pointer rounded-md bg-richblack-800 px-[20px] py-[8px] font-semibold text-richblack-5;
+  @apply cursor-pointer rounded-lg bg-richblack-800 px-6 py-3 font-semibold text-richblack-5 transition-all duration-200 hover:bg-richblack-700 hover:scale-105 active:scale-95 border border-richblack-600 hover:border-richblack-500;
 }
+
+@media (max-width: 768px) {
+  .blackButton {
+    @apply px-4 py-2 text-sm;
+  }
+}
+
 .lable-style {
-  @apply text-[14px] text-richblack-5;
+  @apply text-sm text-richblack-5 font-medium;
 }
+
 .form-style {
-  @apply rounded-lg bg-richblack-700 p-3 text-[16px] leading-[24px] text-richblack-5 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-richblack-400 focus:outline-none;
+  @apply rounded-lg bg-richblack-700 p-3 text-base leading-6 text-richblack-5 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-richblack-400 focus:outline-none focus:ring-2 focus:ring-yellow-50 focus:ring-opacity-50 transition-all duration-200;
 }
+
+@media (max-width: 768px) {
+  .form-style {
+    @apply p-2.5 text-sm;
+  }
+}
+
 .section_heading {
-  @apply text-2xl font-bold text-richblack-5 lg:text-4xl;
+  @apply text-2xl font-bold text-richblack-5 lg:text-4xl xl:text-5xl leading-tight;
+}
+
+@media (max-width: 768px) {
+  .section_heading {
+    @apply text-xl;
+  }
+}
+
+/* Enhanced responsive utilities */
+.container-responsive {
+  @apply w-11/12 max-w-maxContent mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.text-responsive-xl {
+  @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+}
+
+.text-responsive-lg {
+  @apply text-xl sm:text-2xl lg:text-3xl;
+}
+
+.text-responsive-base {
+  @apply text-sm sm:text-base lg:text-lg;
+}
+
+.spacing-responsive {
+  @apply space-y-4 sm:space-y-6 lg:space-y-8;
+}
+
+.padding-responsive {
+  @apply p-4 sm:p-6 lg:p-8;
+}
+
+.margin-responsive {
+  @apply my-8 sm:my-12 lg:my-16;
 }

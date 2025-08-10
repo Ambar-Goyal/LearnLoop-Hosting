@@ -27,7 +27,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10">
+      <div className="hidden md:flex h-[calc(100vh-3.5rem)] min-w-[200px] lg:min-w-[220px] xl:min-w-[240px] flex-col border-r border-r-richblack-700 bg-richblack-800 py-6 lg:py-10">
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
             if (link.type && user?.accountType !== link.type) return null
@@ -36,8 +36,8 @@ export default function Sidebar() {
             )
           })}
         </div>
-    {/* line creation above settings and logout */}
-        <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-700" /> 
+        {/* line creation above settings and logout */}
+        <div className="mx-auto mt-4 lg:mt-6 mb-4 lg:mb-6 h-[1px] w-10/12 bg-richblack-700" /> 
         <div className="flex flex-col">
           <SidebarLink
             link={{ name: "Settings", path: "/dashboard/settings" }}
@@ -54,7 +54,7 @@ export default function Sidebar() {
                 btn2Handler: () => setConfirmationModal(null),
               })
             }
-            className="px-8 py-2 text-sm font-medium text-richblack-300"
+            className="px-6 lg:px-8 py-2 lg:py-3 text-sm font-medium text-richblack-300 hover:text-richblack-50 hover:bg-richblack-700 transition-all duration-200 rounded-lg mx-2"
           >
             <div className="flex items-center gap-x-2">
               <VscSignOut className="text-lg" />
