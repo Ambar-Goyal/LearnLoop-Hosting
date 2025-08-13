@@ -30,5 +30,3 @@ Students can explore, purchase, and consume courses, while instructors can creat
 **Other Tools:** Razorpay, Cloudinary, JWT, Bcrypt
 
 ---
-
-## 🗂️ Project Structure
