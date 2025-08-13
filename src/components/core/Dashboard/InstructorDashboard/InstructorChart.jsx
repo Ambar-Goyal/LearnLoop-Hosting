@@ -2,25 +2,36 @@ import { useState } from "react"
 import { Chart, registerables } from "chart.js"
 import { Pie } from "react-chartjs-2"
 
+// ✅ Register Chart.js modules so Pie chart works
 Chart.register(...registerables)
 
 export default function InstructorChart({ courses }) {
-  // State to keep track of the currently selected chart
+  // ================================
+  // 1️⃣ State to track which chart to show
+  // ================================
+  // "students" → shows students enrolled in each course
+  // "income" → shows income generated from each course
   const [currChart, setCurrChart] = useState("students")
 
-  // Function to generate random colors for the chart
+  // ================================
+  // 2️⃣ Function to generate random colors for the pie chart slices
+  // ================================
+  // - This helps visually differentiate each course
+  // - Generates a random RGB value for each data point
   const generateRandomColors = (numColors) => {
-    const colors = []
-    for (let i = 0; i < numColors; i++) {
-      const color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-        Math.random() * 256
-      )}, ${Math.floor(Math.random() * 256)})`
-      colors.push(color)
-    }
-    return colors
+    return Array.from({ length: numColors }, () =>
+      `rgb(${Math.floor(Math.random() * 256)}, 
+            ${Math.floor(Math.random() * 256)}, 
+            ${Math.floor(Math.random() * 256)})`
+    )
   }
 
-  // Data for the chart displaying student information
+  // ================================
+  // 3️⃣ Data for "Students" chart
+  // ================================
+  // labels → course names
+  // data → number of students enrolled
+  // backgroundColor → random colors for each slice
   const chartDataStudents = {
     labels: courses.map((course) => course.courseName),
     datasets: [
@@ -31,7 +42,11 @@ export default function InstructorChart({ courses }) {
     ],
   }
 
-  // Data for the chart displaying income information
+  // ================================
+  // 4️⃣ Data for "Income" chart
+  // ================================
+  // labels → course names
+  // data → total income from each course
   const chartIncomeData = {
     labels: courses.map((course) => course.courseName),
     datasets: [
@@ -42,16 +57,40 @@ export default function InstructorChart({ courses }) {
     ],
   }
 
-  // Options for the chart
+  // ================================
+  // 5️⃣ Chart options
+  // ================================
+  // maintainAspectRatio → false allows custom height/width
+  // responsive → makes it resize automatically
+  // legend.position → moves legend to bottom for better fit
+  // legend.labels.color → makes text white for dark theme
   const options = {
     maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          color: "#fff",
+        },
+      },
+    },
   }
 
+  // ================================
+  // 6️⃣ JSX UI
+  // ================================
+  // - Outer box has dark background and padding
+  // - Buttons let user toggle between "Students" & "Income" chart
+  // - Chart is contained in fixed square area so it doesn’t overflow
   return (
-    <div className="flex flex-1 flex-col gap-y-4 rounded-md bg-richblack-800 p-6">
+    <div className="flex flex-1 flex-col gap-y-4 rounded-md bg-richblack-800 p-6 overflow-hidden">
+      {/* Section title */}
       <p className="text-lg font-bold text-richblack-5">Visualize</p>
+
+      {/* Toggle buttons */}
       <div className="space-x-4 font-semibold">
-        {/* Button to switch to the "students" chart */}
+        {/* Students Button */}
         <button
           onClick={() => setCurrChart("students")}
           className={`rounded-sm p-1 px-3 transition-all duration-200 ${
@@ -62,7 +101,8 @@ export default function InstructorChart({ courses }) {
         >
           Students
         </button>
-        {/* Button to switch to the "income" chart */}
+
+        {/* Income Button */}
         <button
           onClick={() => setCurrChart("income")}
           className={`rounded-sm p-1 px-3 transition-all duration-200 ${
@@ -74,8 +114,10 @@ export default function InstructorChart({ courses }) {
           Income
         </button>
       </div>
-      <div className="relative mx-auto aspect-square h-full w-full">
-        {/* Render the Pie chart based on the selected chart */}
+
+      {/* Chart container */}
+      {/* Fixed height & width so chart stays inside box */}
+      <div className="relative mx-auto h-[300px] w-full max-w-[300px]">
         <Pie
           data={currChart === "students" ? chartDataStudents : chartIncomeData}
           options={options}
@@ -84,3 +126,4 @@ export default function InstructorChart({ courses }) {
     </div>
   )
 }
+// needs options and data bas 
