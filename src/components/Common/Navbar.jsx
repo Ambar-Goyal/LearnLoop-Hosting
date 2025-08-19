@@ -150,6 +150,13 @@ function Navbar() {
               )}
             </Link>
           )}
+          {user && user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <Link to="/quiz" className="relative">
+              <span className="text-richblack-100 hover:text-yellow-25 transition-colors">
+                Quiz
+              </span>
+            </Link>
+          )}
           {token === null && (
             <Link to="/login">
               <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">

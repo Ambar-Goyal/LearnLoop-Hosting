@@ -28,6 +28,8 @@ import ForgotPassword from "./pages/ForgotPassword"
 // Pages
 import Home from "./pages/Home"
 import Login from "./pages/Login"
+import Quiz from "./pages/Quiz"
+import QuizLeaderboard from "./pages/QuizLeaderboard"
 import Signup from "./pages/Signup"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
@@ -57,6 +59,35 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
         <Route path="catalog/:catalogName" element={<Catalog />} />
+        {/* Quiz Routes - Protected for Students */}
+        <Route
+          path="/quiz"
+          element={
+            <PrivateRoute>
+              {user?.accountType === ACCOUNT_TYPE.STUDENT ? (
+                <Quiz />
+              ) : (
+                <div className="flex flex-1 justify-center items-center text-white text-3xl">
+                  Quiz is only available for Students
+                </div>
+              )}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/quiz/leaderboard"
+          element={
+            <PrivateRoute>
+              {user?.accountType === ACCOUNT_TYPE.STUDENT ? (
+                <QuizLeaderboard />
+              ) : (
+                <div className="flex flex-1 justify-center items-center text-white text-3xl">
+                  Leaderboard is only available for Students
+                </div>
+              )}
+            </PrivateRoute>
+          }
+        />
         {/* Open Route - for Only Non Logged in User */}
         <Route
           path="login"
