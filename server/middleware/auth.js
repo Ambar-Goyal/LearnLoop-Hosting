@@ -8,7 +8,7 @@ dotenv.config();
 // This function is used as middleware to authenticate user requests
 exports.auth = async (req, res, next) => {
 	try {
-		// Extracting JWT from request cookies, body or header
+		// Extracting JWT from request cookies, body or he4ader
 		const token =
 			req.cookies.token ||
 			req.body.token ||

@@ -20,9 +20,7 @@ const OTPSchema = new mongoose.Schema({
 // Define a function to send emails node mailer we will use here 
 async function sendVerificationEmail(email, otp) {
 	// Create a transporter to send emails
-
 	// Define the email options
-
 	// Send the email
 	try {
 		const mailResponse = await mailSender(

@@ -3,6 +3,10 @@ const Section = require("../models/Section")
 const SubSection = require("../models/Subsection")
 const CourseProgress = require("../models/CourseProgress")
 const Course = require("../models/Course")
+
+
+
+// video khtm hone pr progress update krre hain just 
 /// when the payment of course being done we need to marke the courseeprogrss as null array else humenha error aayega ki course pORGReSS NOT EXIEST
 exports.updateCourseProgress = async (req, res) => {
   const { courseId, subsectionId } = req.body

@@ -1,12 +1,12 @@
 const Category = require("../models/Category")
-// tagas are cretad by admin only not anybody they are available during the creation of the course hence humne phle hi database mei daalrkhe hain yeh 
+// categories are cretad by admin only not anybody they are available during the creation of the course hence humne phle hi database mei daalrkhe hain yeh 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max)
 }
 exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body
-    if (!name) {
+    if (!name || !description) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" })

@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
     )
     console.log("DETAILS", updatedDetails)
 
-    const url = `http://localhost:3000/update-password/${token}` // frontend 300 pe chalare the na 
+    const url = `http://localhost:3000/update-password/${token}` // frontend 3000 pe chalare the na 
     // const url = `https://learnloop.vercel.app/update-password/${token}`
 
     await mailSender(

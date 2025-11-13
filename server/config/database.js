@@ -1,18 +1,22 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+console.log('🎯🎯🎯 DATABASE.JS - BRAND NEW VERSION 🎯🎯🎯');
+console.log('🎯 LOADED AT: ' + new Date().toISOString());
+console.log('🎯 THIS IS DEFINITELY THE NEW FILE 🎯');
 
-const { MONGODB_URL } = process.env;
+const mongoose = require('mongoose');
 
 exports.connect = () => {
-	mongoose
-		.connect(MONGODB_URL, {
-			useNewUrlparser: true,
-			useUnifiedTopology: true,
-		})
-		.then(console.log(`DB Connection Success`))
-		.catch((err) => {
-			console.log(`DB Connection Failed`);
-			console.log(err);
-			process.exit(1);
-		});
+    console.log('🔄 ATTEMPTING DATABASE CONNECTION...');
+    
+    mongoose.connect(process.env.MONGODB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('✅✅✅ DATABASE CONNECTED SUCCESSFULLY ✅✅✅');
+    })
+    .catch((error) => {
+        console.log('❌ DATABASE CONNECTION FAILED');
+        console.log(error);
+        process.exit(1);
+    });
 };

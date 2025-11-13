@@ -178,7 +178,7 @@ exports.getEnrolledCourses = async (req, res) => {
         courseID: userDetails.courses[i]._id,
         userId: userId,
       })
-      courseProgressCount = courseProgressCount?.completedVideos.length
+
       if (SubsectionLength === 0) {
         userDetails.courses[i].progressPercentage = 100
       } else {
@@ -214,6 +214,7 @@ exports.instructorDashboard = async (req, res) => {
   try {
     // 1️⃣ Fetch all courses created by the currently logged-in instructor
     // `req.user.id` is available because of authentication middleware
+    
     const courseDetails = await Course.find({ instructor: req.user.id })
 
     // 2️⃣ Transform course data to include additional statistics

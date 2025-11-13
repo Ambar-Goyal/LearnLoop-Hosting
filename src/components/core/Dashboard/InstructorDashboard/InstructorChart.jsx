@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Chart, registerables } from "chart.js"
 import { Pie } from "react-chartjs-2"
 
-// ✅ Register Chart.js modules so Pie chart works
+// Register Chart.js modules so Pie chart works
 Chart.register(...registerables)
 
 export default function InstructorChart({ courses }) {
@@ -78,7 +78,7 @@ export default function InstructorChart({ courses }) {
   }
 
   // ================================
-  // 6️⃣ JSX UI
+  // 6JSX UI
   // ================================
   // - Outer box has dark background and padding
   // - Buttons let user toggle between "Students" & "Income" chart
@@ -126,4 +126,5 @@ export default function InstructorChart({ courses }) {
     </div>
   )
 }
-// needs options and data bas 
+// needs options and data bas
+

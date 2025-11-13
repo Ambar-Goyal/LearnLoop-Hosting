@@ -1,36 +1,50 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
-const mailSender = async (email, title, body) => {
+const mailSender = async (email, subject, htmlBody) => {
   try {
-    if (!process.env.MAIL_HOST || !process.env.MAIL_USER || !process.env.MAIL_PASS) {
-      throw new Error("Missing required environment variables: MAIL_HOST, MAIL_USER, or MAIL_PASS");
+    const { MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS } = process.env;
+
+    // DEBUG: Check if variables are loaded
+    console.log("🔧 SendGrid Config:", { 
+      MAIL_HOST, 
+      MAIL_PORT, 
+      MAIL_USER, 
+      MAIL_PASS_LENGTH: MAIL_PASS?.length 
+    });
+
+    if (!MAIL_HOST || !MAIL_USER || !MAIL_PASS) {
+      throw new Error("Missing MAIL_HOST, MAIL_USER, or MAIL_PASS in .env");
     }
-// transporter created using createTransport function here now 
- 
-    let transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST || "smtp.gmail.com",// for using  gmail server here now 
-      port: parseInt(process.env.MAIL_PORT) || 587,
-      secure: parseInt(process.env.MAIL_PORT) === 465,
+
+    console.log("📧 Creating SendGrid transporter...");
+
+    const transporter = nodemailer.createTransport({
+      host: MAIL_HOST, // smtp.sendgrid.net
+      port: parseInt(MAIL_PORT) || 587,
+      secure: false, // Always false for SendGrid
       auth: {
-        user: process.env.MAIL_USER,//jis mail se mail jayegi 
-        pass: process.env.MAIL_PASS,//app password 
+        user: MAIL_USER, // Should be 'apikey'
+        pass: MAIL_PASS, // Your SendGrid API key (starts with SG.)
       },
     });
 
-// use sendmail function now here 
+    // Use a verified sender email from your SendGrid account
+const fromEmail = "ambargoyal3@gmail.com";    // OR use the default one:
+    // const fromEmail = "noreply@yourdomain.com"; 
 
-let info = await transporter.sendMail({
-  from: `"LearnLoop | AMBAR" <${process.env.MAIL_USER}>`,
-  to: email,
-  subject: title,
-  html: body,
-});
+    const info = await transporter.sendMail({
+      from: `"LearnLoop | AMBAR" <${fromEmail}>`,
+      to: email,
+      subject: subject,
+      html: htmlBody,
+    });
 
-    console.log("Email sent successfully:", info.response);
+    console.log("✅ Email sent successfully via SendGrid");
     return info;
-  } catch (error) {
-    console.error("Error sending email:", error.message);
-    return error.message;
+  } catch (err) {
+    console.error("❌ Error sending email:", err.message);
+    return err.message;
   }
 };
 
