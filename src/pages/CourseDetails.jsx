@@ -28,15 +28,14 @@ function CourseDetails() {
   const { courseId } = useParams()
   // console.log(`course id: ${courseId}`) //course id se poori info le aaye 
 
-  // Declear a state to save the course details
+  // State to save the course details
   const [response, setResponse] = useState(null)
   const [confirmationModal, setConfirmationModal] = useState(null)
+
   useEffect(() => {
-    // Calling fetchCourseDetails fucntion to fetch the details
     ;(async () => {
       try {
         const res = await fetchCourseDetails(courseId)
-        // console.log("course details res: ", res)
         setResponse(res)
       } catch (error) {
         console.log("Could not fetch Course Details")
@@ -44,18 +43,14 @@ function CourseDetails() {
     })()
   }, [courseId])
 
-  // console.log("response: ", response)
-
   // Calculating Avg Review count
   const [avgReviewCount, setAvgReviewCount] = useState(0)
   useEffect(() => {
     const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)//array dediya rating revies vala brooooo
     setAvgReviewCount(count)
   }, [response])
-  // console.log("avgReviewCount: ", avgReviewCount)
 
-  // // Collapse all
-  // const [collapse, setCollapse] = useState("")
+  // Collapse sections
   const [isActive, setIsActive] = useState(Array(0))
   const handleActive = (id) => {
     // console.log("called", id)
@@ -63,7 +58,7 @@ function CourseDetails() {
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
-        : isActive.filter((e) => e != id)
+        : isActive.filter((e) => e !== id)
     )
   }
 
@@ -119,7 +114,6 @@ function CourseDetails() {
   }
 
   if (paymentLoading) {
-    // console.log("payment loading")
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
         <div className="spinner"></div>
@@ -153,8 +147,8 @@ function CourseDetails() {
               <div className="text-sm sm:text-base flex flex-wrap items-center gap-2 sm:gap-3">
                 <span className="text-yellow-25">{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
-                <span>{`(${ratingAndReviews.length} reviews)`}</span>
-                <span>{`${studentsEnroled.length} students enrolled`}</span>
+                <span>{`(${ratingAndReviews?.length || 0} reviews)`}</span>
+                <span>{`${studentsEnroled?.length || 0} students enrolled`}</span>
               </div>
               <div>
                 <p className="text-sm sm:text-base font-medium">
@@ -207,7 +201,7 @@ function CourseDetails() {
               <div className="flex flex-col sm:flex-row sm:flex-wrap justify-between gap-3 sm:gap-2">
                 <div className="flex flex-wrap gap-2 sm:gap-3 text-sm sm:text-base">
                   <span>
-                    {courseContent.length} {`section(s)`}
+                    {courseContent?.length || 0} {`section(s)`}
                   </span>
                   <span>
                     {totalNoOfLectures} {`lecture(s)`}
@@ -243,9 +237,9 @@ function CourseDetails() {
               <div className="flex items-center gap-3 sm:gap-4 py-4 sm:py-6">
                 <img
                   src={
-                    instructor.image
+                    instructor?.image
                       ? instructor.image
-                      : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
+                      : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor?.firstName || "U"} ${instructor?.lastName || "I"}`
                   }
                   alt="Author"
                   className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full object-cover"
