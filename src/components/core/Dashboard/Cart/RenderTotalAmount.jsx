@@ -17,13 +17,13 @@ export default function RenderTotalAmount() {
   }
 
   return (
-    <div className="min-w-[280px] rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
-      <p className="mb-1 text-sm font-medium text-richblack-300">Total:</p>
-      <p className="mb-6 text-3xl font-medium text-yellow-100">₹ {total}</p>
+    <div className="w-full lg:min-w-[280px] lg:max-w-[320px] rounded-xl border border-richblack-700 bg-richblack-800 p-4 sm:p-6 sticky top-4">
+      <p className="mb-2 text-sm sm:text-base font-semibold text-richblack-300">Total:</p>
+      <p className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold text-yellow-100">₹ {total}</p>
       <IconBtn
         text="Buy Now"
         onclick={handleBuyCourse}
-        customClasses="w-full justify-center"
+        customClasses="w-full justify-center text-base sm:text-lg py-3 sm:py-4"
       />
     </div>
   )

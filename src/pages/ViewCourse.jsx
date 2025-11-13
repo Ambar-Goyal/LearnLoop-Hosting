@@ -36,10 +36,36 @@ export default function ViewCourse() {
 
   return (
     <>
-      <div className="relative flex min-h-[calc(100vh-3.5rem)]">
+      <div className="relative flex flex-col lg:flex-row min-h-[calc(100vh-3.5rem)]">
         <VideoDetailsSidebar setReviewModal={setReviewModal} />
         <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
-          <div className="mx-6">
+          <div className="mx-4 sm:mx-6 lg:mx-8">
+            {/* Mobile course navigation */}
+            <div className="lg:hidden mb-4 sm:mb-6">
+              <div className="bg-richblack-800 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <button
+                    onClick={() => navigate('/dashboard/enrolled-courses')}
+                    className="flex items-center gap-2 text-richblack-100 hover:text-yellow-50 transition-colors duration-200"
+                  >
+                    <IoIosArrowBack size={20} />
+                    <span className="text-sm font-medium">Back to Courses</span>
+                  </button>
+                  <button
+                    onClick={() => setReviewModal(true)}
+                    className="bg-yellow-50 text-richblack-900 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-yellow-100 transition-colors duration-200"
+                  >
+                    Add Review
+                  </button>
+                </div>
+                <div>
+                  <h3 className="text-richblack-5 font-semibold text-lg">{courseEntireData?.courseName}</h3>
+                  <p className="text-richblack-300 text-sm mt-1">
+                    {completedLectures?.length} / {totalNoOfLectures} completed
+                  </p>
+                </div>
+              </div>
+            </div>
             <Outlet />
           </div>
         </div>

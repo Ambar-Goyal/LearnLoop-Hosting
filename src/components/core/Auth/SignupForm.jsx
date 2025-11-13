@@ -86,9 +86,9 @@ function SignupForm() {
       {/* Tab */}
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
       {/* Form */}
-      <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-        <div className="flex gap-x-4">
-          <label>
+      <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4 sm:gap-y-6">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-4">
+          <label className="w-full sm:w-1/2">
             <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
               First Name <sup className="text-pink-200">*</sup>
             </p>
@@ -102,7 +102,7 @@ function SignupForm() {
               className="form-style w-full"
             />
           </label>
-          <label>
+          <label className="w-full sm:w-1/2">
             <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
               Last Name <sup className="text-pink-200">*</sup>
             </p>
@@ -131,8 +131,8 @@ function SignupForm() {
             className="form-style w-full"
           />
         </label>
-        <div className="flex gap-x-4">
-          <label className="relative">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-4">
+          <label className="relative w-full sm:w-1/2">
             <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
               Create Password <sup className="text-pink-200">*</sup>
             </p>
@@ -156,7 +156,7 @@ function SignupForm() {
               )}
             </span>
           </label>
-          <label className="relative">
+          <label className="relative w-full sm:w-1/2">
             <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
               Confirm Password <sup className="text-pink-200">*</sup>
             </p>
@@ -183,7 +183,7 @@ function SignupForm() {
         </div>
         <button
           type="submit"
-          className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+          className="mt-6 rounded-lg bg-yellow-50 py-3 sm:py-4 px-4 sm:px-6 font-semibold text-richblack-900 transition-all duration-200 hover:bg-yellow-100 hover:scale-105 shadow-lg hover:shadow-xl"
         >
           Create Account
         </button>

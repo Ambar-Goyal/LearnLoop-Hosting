@@ -19,11 +19,11 @@ function Home() {
   return (
     <div>
       {/* Section 1 */}
-      <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
+      <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-6 sm:gap-8 lg:gap-12 text-white px-4 sm:px-6 lg:px-8">
         {/* Become a Instructor Button */}
         <Link to={"/signup"}>
-          <div className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-bold text-richblack-200 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-200 hover:scale-95 hover:drop-shadow-none">
-            <div className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900">
+          <div className="group mx-auto mt-8 sm:mt-12 lg:mt-16 w-fit rounded-full bg-richblack-800 p-1 font-bold text-richblack-200 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-300 hover:scale-105 hover:drop-shadow-xl">
+            <div className="flex flex-row items-center gap-2 rounded-full px-6 sm:px-8 lg:px-10 py-2 sm:py-[5px] transition-all duration-200 group-hover:bg-richblack-900">
               <p>Become an Instructor</p>
               <FaArrowRight />
             </div>
@@ -31,13 +31,13 @@ function Home() {
         </Link>
 
         {/* Heading */}
-        <div className="text-center text-4xl font-semibold">
+        <div className="text-center text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
         </div>
 
         {/* Sub Heading */}
-        <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
+        <div className="w-[95%] sm:w-[90%] lg:w-[80%] text-center text-base sm:text-lg lg:text-xl font-medium text-richblack-300 leading-relaxed">
           With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
@@ -45,7 +45,7 @@ function Home() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="mt-8 flex flex-row gap-7">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 w-full sm:w-auto">
           <CTAButton active={true} linkto={"/signup"}>
             Learn More
           </CTAButton>
@@ -55,9 +55,9 @@ function Home() {
         </div>
 
         {/* Video */}
-        <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+        <div className="mx-3 my-6 sm:my-8 lg:my-12 shadow-[10px_-5px_50px_-5px] shadow-blue-200 rounded-2xl overflow-hidden">
           <video
-            className="shadow-[20px_20px_rgba(255,255,255)]"
+            className="shadow-[20px_20px_rgba(255,255,255)] w-full max-w-4xl rounded-2xl"
             muted
             loop
             autoPlay
@@ -71,7 +71,7 @@ function Home() {
           <CodeBlocks
             position={"lg:flex-row"}
             heading={
-              <div className="text-4xl font-semibold">
+              <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
                 Unlock your
                 <HighlightText text={"coding potential"} /> with our online
                 courses.
@@ -101,7 +101,7 @@ function Home() {
           <CodeBlocks
             position={"lg:flex-row-reverse"}
             heading={
-              <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
+              <div className="w-[100%] text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold lg:w-[50%] leading-tight">
                 Start
                 <HighlightText text={"coding in seconds"} />
               </div>
@@ -131,11 +131,11 @@ function Home() {
 
       {/* Section 2 */}
       <div className="bg-pure-greys-5 text-richblack-700">
-        <div className="homepage_bg h-[320px]">
+        <div className="homepage_bg h-[200px] sm:h-[280px] lg:h-[320px]">
           {/* Explore Full Catagory Section */}
-          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
-            <div className="lg:h-[150px]"></div>
-            <div className="flex flex-row gap-7 text-white lg:mt-8">
+          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-6 sm:gap-8 px-4 sm:px-6 lg:px-8">
+            <div className="h-[60px] sm:h-[100px] lg:h-[150px]"></div>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 text-white lg:mt-8 w-full sm:w-auto">
               <CTAButton active={true} linkto={"/signup"}>
                 <div className="flex items-center gap-2">
                   Explore Full Catalog
@@ -149,15 +149,15 @@ function Home() {
           </div>
         </div>
 
-        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
+        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 sm:gap-12 lg:gap-16 px-4 sm:px-6 lg:px-8">
           {/* Job that is in Demand - Section 1 */}
-          <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
-            <div className="text-4xl font-semibold lg:w-[45%] ">
+          <div className="mb-8 sm:mb-10 mt-[-60px] sm:mt-[-80px] lg:mt-[-100px] flex flex-col justify-between gap-6 sm:gap-8 lg:gap-12 lg:mt-20 lg:flex-row lg:gap-0">
+            <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold lg:w-[45%] leading-tight">
               Get the skills you need for a{" "}
               <HighlightText text={"job that is in demand."} />
             </div>
-            <div className="flex flex-col items-start gap-10 lg:w-[40%]">
-              <div className="text-[16px]">
+            <div className="flex flex-col items-start gap-6 sm:gap-8 lg:gap-10 lg:w-[40%]">
+              <div className="text-sm sm:text-base lg:text-lg leading-relaxed">
                 The modern LearnLoop is the dictates its own terms. Today, to
                 be a competitive specialist requires more than professional
                 skills.
@@ -177,12 +177,12 @@ function Home() {
       </div>
 
       {/* Section 3 */}
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+      <div className="relative mx-auto my-12 sm:my-16 lg:my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 sm:gap-12 lg:gap-16 bg-richblack-900 text-white px-4 sm:px-6 lg:px-8">
         {/* Become a instructor section */}
         <InstructorSection />
 
         {/* Reviws from Other Learner */}
-        <h1 className="text-center text-4xl font-semibold mt-8">
+        <h1 className="text-center text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mt-8 sm:mt-12 lg:mt-16 leading-tight">
           Reviews from other learners
         </h1>
         <ReviewSlider />
