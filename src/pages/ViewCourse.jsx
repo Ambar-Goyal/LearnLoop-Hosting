@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Outlet, useParams } from "react-router-dom"
+import { Outlet, useParams, useNavigate } from "react-router-dom"
+import { IoIosArrowBack } from "react-icons/io"
 
 import CourseReviewModal from "../components/core/ViewCourse/CourseReviewModal"
 import VideoDetailsSidebar from "../components/core/ViewCourse/VideoDetailsSidebar"
@@ -15,7 +16,9 @@ import {
 export default function ViewCourse() {
   const { courseId } = useParams()
   const { token } = useSelector((state) => state.auth)
+  const { completedLectures, courseSectionData, courseEntireData, totalNoOfLectures } = useSelector((state) => state.viewCourse)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [reviewModal, setReviewModal] = useState(false)
 
   useEffect(() => {
@@ -74,8 +77,3 @@ export default function ViewCourse() {
     </>
   )
 }
-
-// The <Outlet /> tag in React Router is basically a placeholder where the child route’s component will be rendered inside the parent route’s layout.
-
-// Think of it like saying:
-// "I’ll keep a space here in my page, and whatever nested route matches will appear in this space." here used for video details 

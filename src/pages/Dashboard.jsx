@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux"
-import { Outlet } from "react-router-dom"
+import { Outlet, Link, matchPath, useLocation } from "react-router-dom"
 
 import Sidebar from "../components/core/Dashboard/Sidebar"
+import { sidebarLinks } from "../data/dashboard-links"
 
 function Dashboard() {
   const { loading: profileLoading } = useSelector((state) => state.profile)
   const { loading: authLoading } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.profile)
+  const location = useLocation()
 
   if (profileLoading || authLoading) {
     return (
